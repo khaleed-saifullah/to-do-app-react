@@ -1,3 +1,6 @@
+import { useState } from "react";
+import DeleteModal from "./DeleteModal";
+
 const Task = ({
   taskName,
   taskPriority,
@@ -7,6 +10,10 @@ const Task = ({
   taskIndex,
   toggleComplete,
 }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  function deleteTask(index) {
+    itemDelete(index);
+  }
   return (
     <div>
       <div className="task-list">
@@ -44,48 +51,18 @@ const Task = ({
           <button className="btn btn-info me-2" onClick={itemEdit}>
             <i className="bi bi-pencil-fill" />
           </button>
-          <button className="btn btn-danger" onClick={itemDelete}>
+          <button
+            className="btn btn-danger"
+            onClick={() => setShowDeleteModal(!showDeleteModal)}
+          >
             <i className="bi bi-trash-fill" />
           </button>
-          {/* Delete Task Modal */}
-          <div
-            className="modal fade"
-            id="deleteTaskModal"
-            tabIndex={-1}
-            aria-labelledby="deleteTaskModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel">
-                    Delete task
-                  </h1>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  />
-                </div>
-                <div className="modal-body">
-                  <h2>Are you sure to delete ?</h2>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" className="btn btn-primary">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DeleteModal
+            showDeleteModal={showDeleteModal}
+            closeDeleteModal={() => setShowDeleteModal(false)}
+            index={taskIndex}
+            deleteTask={deleteTask}
+          />
         </div>
       </div>
     </div>

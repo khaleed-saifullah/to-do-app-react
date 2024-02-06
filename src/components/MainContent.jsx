@@ -28,6 +28,12 @@ const MainContent = () => {
     setTaskList(newTaskList);
   }
 
+  function itemDelete(index) {
+    const newTaskList = [...taskList];
+    newTaskList.splice(index, 1);
+    setTaskList(newTaskList);
+  }
+
   return (
     <>
       <section className="main-content">
@@ -76,7 +82,7 @@ const MainContent = () => {
                     isComplete={item.isComplete}
                     taskIndex={index}
                     toggleComplete={toggleComplete}
-                    // itemDelete={() => deleteItem(index)}
+                    itemDelete={itemDelete}
                     // itemEdit={() => editItem(index)}
                   />
                 );
