@@ -48,11 +48,12 @@
 
 .task-list-details {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .task-list-details .form-check {
   margin-bottom: 0px !important;
+  min-height: 0;
 }
 
 .task-list-info > span {
@@ -62,12 +63,21 @@
   font-weight: 500;
 }
 
-.task-list-info h4 {
+.task-list-info p {
   margin-bottom: 0;
+  display: flex;
+  align-items: center;
 }
 
-.task-list-info h4 span {
+.task-list-info p span {
   font-size: 12px;
-  top: -5px;
-  position: relative;
+  text-transform: capitalize;
+}
+
+.task-name {
+  font-weight: 500;
+  font-size: 18px !important;
+}
+.task-name.complete {
+  text-decoration: line-through;
 }
