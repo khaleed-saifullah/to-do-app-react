@@ -21,13 +21,7 @@
 
 Refer to https://nodejs.org/en/ to install nodejs
 
-### Install create-react-app
-
-Install create-react-app npm package globally. This will help to easily run the project and also build the source files easily. Use the following command to install create-react-app
-
-```bash
-npm install -g create-react-app
-```
+````
 
 ## Cloning and Running the Application in local
 
@@ -37,7 +31,7 @@ Install all the npm packages. Go into the project folder and type the following 
 
 ```bash
 npm install
-```
+````
 
 In order to run the application Type the following command
 
@@ -48,5 +42,5 @@ npm run dev
 ## Application design
 
 1. Use functional components of React
-2. React hooks(useState,useRef)
+2. React hooks(useState,useEffect)
 3. Use localstorage for save data in local.
