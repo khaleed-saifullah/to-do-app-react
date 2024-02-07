@@ -5,13 +5,15 @@ import Modal from "react-bootstrap/Modal";
 function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
   useEffect(() => {
     if (from == "edit") {
+      setShowError(false);
       setTaskName(task.name);
       setTaskPriority(task.priority);
     }
-  }, []);
+  }, [show]);
 
   const [taskName, setTaskName] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
+  const [showError, setShowError] = useState(false);
 
   function clearData() {
     setTaskName("");
@@ -24,8 +26,12 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
           <Modal.Title>{from == "add" ? "Add" : "Edit"} Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {showError && (
+            <h6 className="text-danger">Please fill up all required fields</h6>
+          )}
+
           <div className="mb-3">
-            <label className="form-label">Task Name</label>
+            <label className="form-label">Task Name *</label>
             <input
               type="text"
               className="form-control"
@@ -35,7 +41,7 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">Priority</label>
+            <label className="form-label">Priority *</label>
             <select
               className="form-select"
               onChange={(e) => setTaskPriority(e.target.value)}
@@ -62,8 +68,13 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
             <Button
               variant="primary"
               onClick={() => {
-                clearData();
-                addTask(taskName, taskPriority);
+                if (taskName && taskPriority) {
+                  setShowError(false);
+                  clearData();
+                  addTask(taskName, taskPriority);
+                } else {
+                  setShowError(true);
+                }
               }}
             >
               Add Task
@@ -71,7 +82,14 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
           ) : (
             <Button
               variant="primary"
-              onClick={() => editTask(taskName, taskPriority, task.index)}
+              onClick={() => {
+                if (taskName && taskPriority) {
+                  setShowError(false);
+                  editTask(taskName, taskPriority, task.index);
+                } else {
+                  setShowError(true);
+                }
+              }}
             >
               Edit Task
             </Button>
