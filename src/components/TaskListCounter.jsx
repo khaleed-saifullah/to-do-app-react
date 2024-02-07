@@ -1,8 +1,12 @@
 const TaskListCounter = ({ totalTask, completedTask }) => {
   return (
     <div className="task-counter">
-      <p>Total Task : {totalTask}</p>
-      <p>Completed Task : {completedTask}</p>
+      <p>
+        Total Task : <b>{totalTask}</b>
+      </p>
+      <p>
+        Completed Task : <b>{completedTask}</b>
+      </p>
     </div>
   );
 };

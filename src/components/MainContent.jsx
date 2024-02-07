@@ -108,7 +108,7 @@ const MainContent = () => {
       <section className="main-content">
         <div className="tasks-header">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-sm-6">
               <button
                 type="button"
                 className="btn btn-primary"
@@ -123,7 +123,7 @@ const MainContent = () => {
                 from={"add"}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-sm-6">
               <div className="tasks-header-filtering-option">
                 <select
                   className="form-select"
