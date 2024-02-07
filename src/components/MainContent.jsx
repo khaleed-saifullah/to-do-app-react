@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AddEditModal from "./AddEditModal";
 import Task from "./Task";
 import TaskListCounter from "./TaskListCOunter";
+import { TODOLIST } from "../constants/constants";
 
 const MainContent = () => {
   const [show, setShow] = useState(false);
@@ -16,7 +17,17 @@ const MainContent = () => {
     if (show) {
       setShow(false);
     }
+    if (taskList.length) {
+      localStorage.setItem(TODOLIST, JSON.stringify(taskList));
+    }
   }, [taskList]);
+
+  useEffect(() => {
+    if (!taskList.length) {
+      const localTaskList = JSON.parse(localStorage.getItem(TODOLIST));
+      setTaskList(localTaskList);
+    }
+  }, []);
 
   // Add Task Fuction
   function addTask(taskName, taskPriority) {
@@ -42,6 +53,9 @@ const MainContent = () => {
   function itemDelete(index) {
     const newTaskList = [...taskList];
     newTaskList.splice(index, 1);
+    if (!newTaskList.length) {
+      localStorage.setItem(TODOLIST, JSON.stringify([]));
+    }
     setTaskList(newTaskList);
   }
 
@@ -77,11 +91,13 @@ const MainContent = () => {
                 <select
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={(e) => filterTask(e.target.value)}
                 >
                   <option>Select Priority</option>
-                  <option value={1}>Low</option>
-                  <option value={2}>Medium</option>
-                  <option value={2}>High</option>
+                  <option value="all">All</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
                 </select>
               </div> */}
             </div>

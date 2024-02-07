@@ -22,6 +22,7 @@ const Task = ({
 
   function deleteTask(index) {
     itemDelete(index);
+    setShowDeleteModal(false);
   }
   return (
     <div>
