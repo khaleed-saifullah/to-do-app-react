@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import AddEditModal from "./AddEditModal";
 import Task from "./Task";
+import TaskListCounter from "./TaskListCOunter";
 
 const MainContent = () => {
   const [show, setShow] = useState(false);
   const [taskList, setTaskList] = useState([]);
+
+  const totalTask = taskList.length;
+  const completedTask = taskList.filter(
+    (item) => item.isComplete == true
+  ).length;
 
   useEffect(() => {
     if (show) {
@@ -12,6 +18,7 @@ const MainContent = () => {
     }
   }, [taskList]);
 
+  // Add Task Fuction
   function addTask(taskName, taskPriority) {
     const newTaskList = [...taskList];
     newTaskList.push({
@@ -22,15 +29,26 @@ const MainContent = () => {
     setTaskList(newTaskList);
   }
 
-  function toggleComplete(index) {
+  // Edit Task Function
+  function editTask(taskName, taskPriority, taskIndex) {
     const newTaskList = [...taskList];
-    newTaskList[index].isComplete = !newTaskList[index].isComplete;
+    newTaskList[taskIndex].name = taskName;
+    newTaskList[taskIndex].priority = taskPriority;
+
     setTaskList(newTaskList);
   }
 
+  // Delete Task Function
   function itemDelete(index) {
     const newTaskList = [...taskList];
     newTaskList.splice(index, 1);
+    setTaskList(newTaskList);
+  }
+
+  // Toggle Complete function
+  function toggleComplete(index) {
+    const newTaskList = [...taskList];
+    newTaskList[index].isComplete = !newTaskList[index].isComplete;
     setTaskList(newTaskList);
   }
 
@@ -40,7 +58,6 @@ const MainContent = () => {
         <div className="tasks-header">
           <div className="row">
             <div className="col-md-6">
-              {/* Button trigger modal */}
               <button
                 type="button"
                 className="btn btn-primary"
@@ -48,11 +65,11 @@ const MainContent = () => {
               >
                 Add Task
               </button>
-              {/*Add Task Modal */}
               <AddEditModal
                 show={show}
                 closeModal={() => setShow(false)}
                 addTask={addTask}
+                from={"add"}
               />
             </div>
             <div className="col-md-6">
@@ -73,6 +90,10 @@ const MainContent = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="task-lists-wrapper">
+              <TaskListCounter
+                totalTask={totalTask}
+                completedTask={completedTask}
+              />
               {taskList.map((item, index) => {
                 return (
                   <Task
@@ -83,7 +104,7 @@ const MainContent = () => {
                     taskIndex={index}
                     toggleComplete={toggleComplete}
                     itemDelete={itemDelete}
-                    // itemEdit={() => editItem(index)}
+                    itemEdit={editTask}
                   />
                 );
               })}

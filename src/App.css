@@ -81,3 +81,14 @@
 .task-name.complete {
   text-decoration: line-through;
 }
+
+.task-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.task-counter p {
+  margin-bottom: 5px;
+}

@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function AddEditModal({ show, closeModal, addTask }) {
+function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
+  useEffect(() => {
+    if (from == "edit") {
+      setTaskName(task.name);
+      setTaskPriority(task.priority);
+    }
+  }, []);
   const [taskName, setTaskName] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
   return (
     <>
       <Modal show={show}>
         <Modal.Header>
-          <Modal.Title>Add Task</Modal.Title>
+          <Modal.Title>{from == "add" ? "Add" : "Edit"} Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
@@ -19,6 +25,7 @@ function AddEditModal({ show, closeModal, addTask }) {
               className="form-control"
               placeholder="Task Name"
               onChange={(e) => setTaskName(e.target.value)}
+              value={taskName}
             />
           </div>
           <div className="mb-3">
@@ -26,6 +33,7 @@ function AddEditModal({ show, closeModal, addTask }) {
             <select
               className="form-select"
               onChange={(e) => setTaskPriority(e.target.value)}
+              value={taskPriority}
             >
               <option>Select an option</option>
               <option value="low">Low</option>
@@ -38,12 +46,21 @@ function AddEditModal({ show, closeModal, addTask }) {
           <Button variant="secondary" onClick={closeModal}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            onClick={() => addTask(taskName, taskPriority)}
-          >
-            Add Task
-          </Button>
+          {from == "add" ? (
+            <Button
+              variant="primary"
+              onClick={() => addTask(taskName, taskPriority)}
+            >
+              Add Task
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={() => editTask(taskName, taskPriority, task.index)}
+            >
+              Edit Task
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

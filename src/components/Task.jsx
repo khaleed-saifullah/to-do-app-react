@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteModal from "./DeleteModal";
+import AddEditModal from "./AddEditModal";
 
 const Task = ({
   taskName,
@@ -11,6 +12,14 @@ const Task = ({
   toggleComplete,
 }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  useEffect(() => {
+    if (showEditModal) {
+      setShowEditModal(false);
+    }
+  }, [itemEdit]);
+
   function deleteTask(index) {
     itemDelete(index);
   }
@@ -48,9 +57,19 @@ const Task = ({
           </div>
         </div>
         <div className="task-list-action">
-          <button className="btn btn-info me-2" onClick={itemEdit}>
+          <button
+            className="btn btn-info me-2"
+            onClick={() => setShowEditModal(!showEditModal)}
+          >
             <i className="bi bi-pencil-fill" />
           </button>
+          <AddEditModal
+            show={showEditModal}
+            closeModal={() => setShowEditModal(false)}
+            task={{ name: taskName, priority: taskPriority, index: taskIndex }}
+            from={"edit"}
+            editTask={itemEdit}
+          />
           <button
             className="btn btn-danger"
             onClick={() => setShowDeleteModal(!showDeleteModal)}
