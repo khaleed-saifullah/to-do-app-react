@@ -47,6 +47,6 @@ npm run dev
 
 ## Application design
 
-1.Use functional components of React
-2.React hooks(useState,useRef)
-3.Use localstorage for save data in local.
+1. Use functional components of React
+2. React hooks(useState,useRef)
+3. Use localstorage for save data in local.
