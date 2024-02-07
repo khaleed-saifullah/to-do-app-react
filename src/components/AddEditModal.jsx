@@ -9,11 +9,17 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
       setTaskPriority(task.priority);
     }
   }, []);
+
   const [taskName, setTaskName] = useState("");
   const [taskPriority, setTaskPriority] = useState("");
+
+  function clearData() {
+    setTaskName("");
+    setTaskPriority("");
+  }
   return (
     <>
-      <Modal show={show}>
+      <Modal show={show} onHide={clearData}>
         <Modal.Header>
           <Modal.Title>{from == "add" ? "Add" : "Edit"} Task</Modal.Title>
         </Modal.Header>
@@ -43,13 +49,22 @@ function AddEditModal({ show, closeModal, addTask, from, task, editTask }) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              if (from == "add") clearData();
+              closeModal();
+            }}
+          >
             Close
           </Button>
           {from == "add" ? (
             <Button
               variant="primary"
-              onClick={() => addTask(taskName, taskPriority)}
+              onClick={() => {
+                clearData();
+                addTask(taskName, taskPriority);
+              }}
             >
               Add Task
             </Button>
