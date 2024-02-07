@@ -11,9 +11,11 @@
 
 ## Tools & Technologies Used
 
-1.React
-2.Bootstrap
-3.React Bootstrap
+1. React
+2. Bootstrap
+3. Bootstrap Icons
+4. React Bootstrap
+5. Vite
 
 ## Prerequisites
 
