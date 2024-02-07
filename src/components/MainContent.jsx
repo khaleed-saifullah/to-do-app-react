@@ -7,6 +7,7 @@ import { TODOLIST } from "../constants/constants";
 const MainContent = () => {
   const [show, setShow] = useState(false);
   const [taskList, setTaskList] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   const totalTask = taskList.length;
   const completedTask = taskList.filter(
@@ -66,6 +67,42 @@ const MainContent = () => {
     setTaskList(newTaskList);
   }
 
+  // Filtering task function
+  function filterTasks() {
+    if (filter !== "all") {
+      let filterTask = taskList.filter((item) => item.priority === filter);
+      return filterTask.map((item, index) => {
+        return (
+          <Task
+            key={index}
+            taskName={item.name}
+            taskPriority={item.priority}
+            isComplete={item.isComplete}
+            taskIndex={index}
+            toggleComplete={toggleComplete}
+            itemDelete={itemDelete}
+            itemEdit={editTask}
+          />
+        );
+      });
+    } else {
+      return taskList.map((item, index) => {
+        return (
+          <Task
+            key={index}
+            taskName={item.name}
+            taskPriority={item.priority}
+            isComplete={item.isComplete}
+            taskIndex={index}
+            toggleComplete={toggleComplete}
+            itemDelete={itemDelete}
+            itemEdit={editTask}
+          />
+        );
+      });
+    }
+  }
+
   return (
     <>
       <section className="main-content">
@@ -87,19 +124,19 @@ const MainContent = () => {
               />
             </div>
             <div className="col-md-6">
-              {/* <div className="tasks-header-filtering-option">
+              <div className="tasks-header-filtering-option">
                 <select
                   className="form-select"
                   aria-label="Default select example"
-                  onChange={(e) => filterTask(e.target.value)}
+                  onChange={(e) => setFilter(e.target.value)}
+                  value={filter}
                 >
-                  <option>Select Priority</option>
                   <option value="all">All</option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                 </select>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -110,20 +147,7 @@ const MainContent = () => {
                 totalTask={totalTask}
                 completedTask={completedTask}
               />
-              {taskList.map((item, index) => {
-                return (
-                  <Task
-                    key={index}
-                    taskName={item.name}
-                    taskPriority={item.priority}
-                    isComplete={item.isComplete}
-                    taskIndex={index}
-                    toggleComplete={toggleComplete}
-                    itemDelete={itemDelete}
-                    itemEdit={editTask}
-                  />
-                );
-              })}
+              {filterTasks()}
             </div>
           </div>
         </div>
