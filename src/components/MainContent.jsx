@@ -26,7 +26,9 @@ const MainContent = () => {
   useEffect(() => {
     if (!taskList.length) {
       const localTaskList = JSON.parse(localStorage.getItem(TODOLIST));
-      setTaskList(localTaskList);
+      if (localTaskList) {
+        setTaskList(localTaskList);
+      }
     }
   }, []);
 
