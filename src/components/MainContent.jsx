@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddEditModal from "./AddEditModal";
 import Task from "./Task";
-import TaskListCounter from "./TaskListCOunter";
+import TaskListCounter from "./TaskListCounter";
 import { TODOLIST } from "../constants/constants";
 
 const MainContent = () => {
